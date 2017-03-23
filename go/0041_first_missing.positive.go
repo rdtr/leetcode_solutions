@@ -1,3 +1,5 @@
+package main
+
 func firstMissingPositive(nums []int) int {
 	nlen := len(nums)
 	for i := 0; i < nlen; i++ {
