@@ -1,46 +1,47 @@
 func partition(s string) [][]string {
-	slen := len(s)
-	if slen == 0 {
-		return [][]string{}
-	}
-
 	var res [][]string
-	if isPalindrome(s) {
-		res = append(res, []string{s})
-	}
-	doPartition(&res, []string{s})
+	cache := make(map[string]bool)
+
+	var curRes []string
+	doPartition(s, &res, curRes, cache)
 	return res
 }
 
-func doPartition(res *[][]string, strs []string) {
-	slen := len(strs)
-	lastStr := strs[slen-1]
-	if len(lastStr) == 1 {
-		return // no new partition can be created
+func doPartition(s string, res *[][]string, curRes []string, cache map[string]bool) {
+	slen := len(s)
+	if slen == 0 && len(curRes) > 0 {
+		newRes := make([]string, len(curRes))
+		copy(newRes, curRes)
+		*res = append(*res, newRes)
+		return
 	}
 
-	for i := 0; i < len(lastStr)-1; i++ {
-		splitted0, splitted1 := lastStr[0:i+1], lastStr[i+1:]
-		if !isPalindrome(splitted0) {
-			continue
+	for i := 1; i <= slen; i++ {
+		s1, s2 := s[:i], s[i:]
+		if isParlindrome(s1, cache) {
+			doPartition(s2, res, append(curRes, s1), cache)
 		}
-		newStrs := make([]string, slen+1)
-		copy(newStrs[:slen-1], strs[:slen-1])
-		newStrs[slen-1], newStrs[slen] = splitted0, splitted1
-
-		if isPalindrome(splitted1) {
-			*res = append(*res, newStrs)
-		}
-		doPartition(res, newStrs)
 	}
 }
 
-func isPalindrome(s string) bool {
-	slen := len(s)
-	for i, j := 0, slen-1; i < j; i, j = i+1, j-1 {
+func isParlindrome(s string, cache map[string]bool) bool {
+	if len(s) == 1 {
+		return true
+	}
+
+	if _, ok := cache[s]; ok {
+		return true
+	}
+
+	i, j := 0, len(s)-1
+	for i < j {
 		if s[i] != s[j] {
 			return false
 		}
+		i++
+		j--
 	}
-	return true
+
+	cache[s] = true
+	return cache[s]
 }
