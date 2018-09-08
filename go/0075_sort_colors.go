@@ -1,3 +1,5 @@
+package main
+
 func sortColors(nums []int) {
 	if len(nums) == 0 {
 		return

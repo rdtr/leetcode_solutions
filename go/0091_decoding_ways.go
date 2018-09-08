@@ -1,3 +1,5 @@
+package main
+
 func numDecodings(s string) int {
 	slen := len(s)
 	if slen == 0 {

@@ -1,3 +1,5 @@
+package main
+
 import "sort"
 
 func merge(intervals []Interval) []Interval {

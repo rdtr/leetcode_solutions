@@ -1,3 +1,5 @@
+package main
+
 func merge(nums1 []int, m int, nums2 []int, n int) {
 	cur := n + m - 1
 	cur1, cur2 := m-1, n-1

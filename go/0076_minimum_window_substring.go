@@ -1,3 +1,5 @@
+package main
+
 func minWindow(s string, t string) string {
 	requirements := make(map[byte]int)
 	for i := range t {

@@ -1,3 +1,5 @@
+package main
+
 func minPathSum(grid [][]int) int {
 	mlen := len(grid)
 	if mlen == 0 {

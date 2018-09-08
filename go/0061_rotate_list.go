@@ -1,3 +1,5 @@
+package main
+
 func rotateRight(head *ListNode, k int) *ListNode {
 	if k == 0 || head == nil {
 		return head

@@ -1,3 +1,5 @@
+package main
+
 func exist(board [][]byte, word string) bool {
 	m, n := len(board), len(board[0])
 	for i := 0; i < m; i++ {

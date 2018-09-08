@@ -1,3 +1,5 @@
+package main
+
 func inorderTraversal(root *TreeNode) []int {
 	var res []int
 

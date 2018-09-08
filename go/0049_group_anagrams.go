@@ -1,3 +1,5 @@
+package main
+
 import "bytes"
 
 func groupAnagrams(strs []string) [][]string {
@@ -35,4 +37,3 @@ func getAlphabetBit(str string) string {
 	}
 	return b.String()
 }
-

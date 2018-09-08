@@ -1,3 +1,5 @@
+package main
+
 func searchRange(nums []int, target int) []int {
 	nlen := len(nums)
 	if nlen == 0 {

@@ -1,3 +1,5 @@
+package main
+
 func setZeroes(matrix [][]int) {
 	mlen := len(matrix)
 	if mlen == 0 {

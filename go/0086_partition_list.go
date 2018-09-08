@@ -1,3 +1,5 @@
+package main
+
 func partition(head *ListNode, x int) *ListNode {
 	first, second := &ListNode{}, &ListNode{}
 	dummyHeadFirst, dummyHeadSecond := first, second

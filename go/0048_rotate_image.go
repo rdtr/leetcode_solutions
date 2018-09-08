@@ -1,3 +1,5 @@
+package main
+
 func rotate(matrix [][]int) {
 	m := len(matrix)
 	top, bottom, right, left := 0, m-1, m-1, 0

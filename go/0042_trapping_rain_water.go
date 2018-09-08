@@ -1,3 +1,5 @@
+package main
+
 func trap(height []int) int {
 	hlen := len(height)
 	if hlen < 3 {
