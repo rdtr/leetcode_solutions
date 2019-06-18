@@ -36,3 +36,44 @@ class Solution:
             cur = cur.next
         cur.next = None
         return res.next
+
+
+class Solution:
+    def mergeKLists(self, lists: List[ListNode]) -> ListNode:
+        if not lists:
+            return []
+
+        while len(lists) > 1:
+            i = 0
+            newlists = []
+            while i + 1 < len(lists):
+                l1 = lists[i]
+                l2 = lists[i + 1]
+                newlists.append(merge(l1, l2))
+                i += 2
+            if i == len(lists) - 1:
+                newlists.append(lists[-1])
+            lists = newlists
+        return lists[0]
+
+
+def merge(l1, l2):
+    dummy = ListNode(0)
+    cur = dummy
+    while l1 or l2:
+        if l1 and l2:
+            if l1.val > l2.val:
+                cur.next = l2
+                l2 = l2.next
+            else:
+                cur.next = l1
+                l1 = l1.next
+        elif l1:
+            cur.next = l1
+            l1 = None
+        else:
+            cur.next = l2
+            l2 = None
+        cur = cur.next
+    return dummy.next
+
