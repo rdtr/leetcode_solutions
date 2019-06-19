@@ -1,22 +1,22 @@
-# Definition for a binary tree node.
-# class TreeNode:
-#     def __init__(self, x):
-#         self.val = x
-#         self.left = None
-#         self.right = None
-
 class Solution:
     def distributeCoins(self, root: TreeNode) -> int:
         res = [0]
-        self.helper(root, res)
-        return res[0]
+        l = r = 0
+        if root.left:
+            l = helper(root.left, res)
+        if root.right:
+            r = helper(root.right, res)
+        return res[0] + abs(l) + abs(r)
 
-    def helper(self, node, res):
-        if not node:
-            return 0
 
-        lmove = self.helper(node.left, res)
-        rmove = self.helper(node.right, res)
+def helper(root, res):
+    if not root.left and not root.right:
+        return root.val - 1
 
-        res[0] += abs(lmove) + abs(rmove)
-        return node.val + lmove + rmove - 1
+    l = r = 0
+    if root.left:
+        l = helper(root.left, res)
+    if root.right:
+        r = helper(root.right, res)
+    res[0] = res[0] + abs(l) + abs(r)
+    return root.val + l + r - 1
