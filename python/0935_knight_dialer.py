@@ -1,35 +1,20 @@
 class Solution:
-    DEST_MAP = {
-        1: [6, 8],
-        2: [7, 9],
-        3: [4, 8],
-        4: [0, 3, 9],
-        5: [],
-        6: [0, 1, 7],
-        7: [2, 6],
-        8: [1, 3],
-        9: [2, 4],
-        0: [4, 6]
-    }
-
-    def knightDialer(self, N):
-        """
-        :type N: int
-        :rtype: int
-        """
-
-        if N <= 0:
-            return 0
-
-        prev = [1] * 10
-        next = [0] * 10
-
-        for i in range(1, N):
-            for n, pad in enumerate(prev):
-                next_pads = Solution.DEST_MAP[n]
-                for next_pad in next_pads:
-                    next[next_pad] += prev[n]
-
-            prev = next
-            next = [0] * 10
-        return sum(prev) % (10 ** 9 + 7)
+    def knightDialer(self, N: int) -> int:
+        cur = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+        i = 0
+        m = 10 ** 9 + 7
+        while i < N - 1:
+            new = [0] * 10
+            new[0] = (cur[4] + cur[6]) % m
+            new[1] = (cur[6] + cur[8]) % m
+            new[2] = (cur[7] + cur[9]) % m
+            new[3] = (cur[4] + cur[8]) % m
+            new[4] = (cur[0] + cur[3] + cur[9]) % m
+            new[5] = 0
+            new[6] = (cur[0] + cur[1] + cur[7]) % m
+            new[7] = (cur[2] + cur[6]) % m
+            new[8] = (cur[1] + cur[3]) % m
+            new[9] = (cur[2] + cur[4]) % m
+            cur = new
+            i += 1
+        return sum(cur) % m
