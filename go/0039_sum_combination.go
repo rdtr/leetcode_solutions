@@ -1,27 +1,24 @@
 package main
 
-import "sort"
-
 func combinationSum(candidates []int, target int) [][]int {
 	var res [][]int
-	sort.Ints(candidates)
-	doCombinationSum(&res, candidates, []int{}, target, 0, 0)
+	for i, cand := range(candidates) {
+		helper(target, i, candidates[i], []int{cand}, &res, candidates)
+	}
 	return res
 }
 
-func doCombinationSum(res *[][]int, candidates []int, currentCandidates []int, target int, currentSum int, index int) {
-	if currentSum == target {
-		*res = append(*res, currentCandidates)
-		return
-	} else if currentSum > target {
-		return
-	}
-
-	for i := index; i < len(candidates); i++ {
-		newCandidates := make([]int, len(currentCandidates)+1)
-		copy(newCandidates[:len(currentCandidates)], currentCandidates)
-		newCandidates[len(newCandidates)-1] = candidates[i]
-
-		doCombinationSum(res, candidates, newCandidates, target, currentSum+candidates[i], i)
+func helper(target, curIndex, curSum int, cur []int, res *[][]int, candidates []int) {
+	if curSum == target {
+		ans := make([]int, len(cur))
+		copy(ans, cur)
+		*res = append(*res, ans)
+	} else if curSum < target {
+		for i := curIndex; i < len(candidates); i++ {
+			cur = append(cur, candidates[i])
+			helper(target, i, curSum + candidates[i], cur, res, candidates)
+			cur = cur[:len(cur) - 1]
+		}
 	}
 }
+
