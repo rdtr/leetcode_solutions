@@ -1,35 +1,30 @@
+from random import randint
+
 class Solution:
 
-    def __init__(self, w):
-        """
-        :type w: List[int]
-        """
-
+    def __init__(self, w: List[int]):
         self.sums = [0] * len(w)
-        self.sums[0] = w[0]
-        for i in range(1, len(w)):
-            self.sums[i] = self.sums[i - 1] + w[i]
+        cur = 0
+        for i in range(len(w)):
+            cur += w[i]
+            self.sums[i] = cur
 
-    def pickIndex(self):
-        """
-        :rtype: int
-        """
+    def pickIndex(self) -> int:
+        target = randint(0, self.sums[-1] - 1)
 
-        target = random.randint(1, self.sums[-1])
-
-        i = self.bisect_right(self.sums, target)
-        return i - 1 if self.sums[i - 1] == target else i
-
-    def bisect_right(self, nums, target):
-        lo, hi = 0, len(nums)
+        lo = 0
+        hi = len(self.sums)
         while lo < hi:
             mid = lo + (hi - lo) // 2
-
-            if nums[mid] <= target:
-                lo = mid + 1
-            else:
+            if self.sums[mid] > target:
                 hi = mid
-        return hi
+            else:  # self.sums[mid] <= target
+                lo = mid + 1
+
+        if lo == len(self.sums):
+            return len(self.sums) - 1
+        else:
+            return lo
 
 # Your Solution object will be instantiated and called as such:
 # obj = Solution(w)

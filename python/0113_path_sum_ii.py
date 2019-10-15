@@ -1,3 +1,10 @@
+# Definition for a binary tree node.
+# class TreeNode(object):
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+
 class Solution(object):
     def pathSum(self, root, sum):
         """
@@ -5,25 +12,25 @@ class Solution(object):
         :type sum: int
         :rtype: List[List[int]]
         """
-        result = []
+        
         if not root:
-            return result
+            return []
 
-        numsSoFar = []
-        sumSoFar = 0
-        self.doPathSum(root, sum, numsSoFar, sumSoFar, result)
-        return result
-
-    def doPathSum(self, parent, target, numsSoFar, sumSofar, result):
-        if not parent:
+        res = []
+        self.doPathSum(root, sum, 0, [], res)
+        return res
+        
+    def doPathSum(self, node, sum, curSum, cur, res):
+        if node.left is None and node.right is None:
+            if curSum + node.val == sum:
+                cur.append(node.val)
+                res.append(cur.copy())
+                cur.pop()
             return
-        if sumSofar + parent.val == target:
-            if not parent.left and not parent.right:
-                numsSoFar.append(parent.val)
-                result.append(numsSoFar)
-                return
-
-        sumSofar += parent.val
-        numsSoFar.append(parent.val)
-        self.doPathSum(parent.left, target, numsSoFar[:], sumSofar, result)
-        self.doPathSum(parent.right, target, numsSoFar[:], sumSofar, result)
+        
+        cur.append(node.val)
+        if node.left is not None:
+            self.doPathSum(node.left, sum, curSum + node.val, cur, res)
+        if node.right is not None:
+            self.doPathSum(node.right, sum, curSum + node.val, cur, res)
+        cur.pop()

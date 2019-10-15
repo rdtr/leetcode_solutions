@@ -1,20 +1,15 @@
 class Solution:
-    def largestRectangleArea(self, heights):
-        """
-        :type heights: List[int]
-        :rtype: int
-        """
-        heights.append(0)
+    def largestRectangleArea(self, heights: List[int]) -> int:
+        if not heights:
+            return 0
+        heights.append(-1)
 
-        res, stack = 0, []
-        for i, h in enumerate(heights):
-            while stack and heights[stack[-1]] >= h:
-                cur = stack.pop()
-                height = heights[cur]
-                if stack:
-                    width = i - 1 - stack[-1]
-                else:
-                    width = i
-                res = max(res, height * width)
-            stack.append(i)
+        res = 0
+        stack = []
+        for i in range(len(heights)):
+            if i > 0 and heights[i] < heights[i - 1]:
+                while stack and stack[-1][1] > heights[i]:
+                    prevIndex, prevHeight = stack.pop()
+                    res = max(res, (i - 1 - (stack[-1][0] + 1) + 1) * prevHeight) if stack else max(res, i * prevHeight)
+            stack.append((i, heights[i]))
         return res
