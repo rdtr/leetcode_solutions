@@ -5,45 +5,33 @@
 #         self.left = None
 #         self.right = None
 
-from collections import deque
-
-
 class Solution:
-    def countNodes(self, root):
-        """
-        :type root: TreeNode
-        :rtype: int
-        """
-
+    def countNodes(self, root: TreeNode) -> int:
         if not root:
             return 0
-
-        cur = root
-        leftHeight = self.getHeight(cur.left)
-        rightHeight = self.getHeight(cur.right)
-
+        
         res = 0
-        while True:
-            if leftHeight == rightHeight:
-                res += 2 ** leftHeight
-                cur = cur.right
-            else:
-                res += 2 ** rightHeight
-                cur = cur.left
-
-            if not cur:
-                break
-            leftHeight = leftHeight - 1
-            rightHeight = self.getHeight(cur.right)
-        return res
-
-    def getHeight(self, root):
-        height = 0
-        if not root:
-            return height
-
         cur = root
         while cur:
-            height += 1
+            leftHeight = self.checkHeight(cur.left)
+            rightHeight = self.checkHeight(cur.right)
+            if leftHeight == rightHeight:
+                res += self.count(leftHeight) + 1
+                cur = cur.right
+            else:
+                res += self.count(rightHeight) + 1
+                cur = cur.left
+        return res
+        
+    def checkHeight(self, root):
+        res = 0
+        cur = root
+        while cur:
+            res += 1
             cur = cur.left
-        return height
+        return res
+        
+    def count(self, height):
+        if height == 0:
+            return 0
+        return (2 ** height) - 1
